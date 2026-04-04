@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import Link from "next/link"
-import { BookOpen, Target, Check, Calendar, MessageCircle, Bot, Utensils, Send, Clock, User, Award, Activity } from "lucide-react"
+import { BookOpen, Target, Check, Calendar, MessageCircle, Bot, Utensils, Send, Clock, User, Award, Activity, PlayCircle } from "lucide-react"
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
@@ -205,6 +205,11 @@ export default function StudentDashboard() {
                     </div>
                     {period.status === 'current' && (
                       <Badge className="bg-blue-600 text-[10px] ml-auto animate-pulse flex gap-1">On Now</Badge>
+                    )}
+                    {period.status === 'completed' && (
+                      <Button variant="ghost" size="sm" className="ml-auto text-indigo-600 h-7 text-[10px] px-2 gap-1 hover:bg-indigo-50 dark:hover:bg-indigo-900/50 border border-indigo-100 dark:border-indigo-900">
+                        <PlayCircle className="w-3 h-3" /> Watch Recording
+                      </Button>
                     )}
                   </div>
                 ))}

@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { Users, FileText, CheckCircle, Sparkles, Plus, Loader2, BrainCircuit, ChevronRight } from "lucide-react"
+import { Users, FileText, CheckCircle, Sparkles, Plus, Loader2, BrainCircuit, ChevronRight, AlertTriangle, X } from "lucide-react"
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -12,6 +12,20 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 export default function TeacherDashboard() {
   const [isGenerating, setIsGenerating] = useState(false)
   const [generatedResult, setGeneratedResult] = useState<string | null>(null)
+  
+  const [isCopilotOpen, setIsCopilotOpen] = useState(false)
+  const [isPopupGenerating, setIsPopupGenerating] = useState(false)
+  const [popupResult, setPopupResult] = useState<string | null>(null)
+  const [popupInput, setPopupInput] = useState("")
+
+  const handlePopupGenerate = () => {
+    if (!popupInput.trim()) return;
+    setIsPopupGenerating(true)
+    setTimeout(() => {
+      setPopupResult(`Here's a draft email to Aryan's parents:\n\nDear Mr. & Mrs. Sharma,\nI hope this email finds you well. I'm reaching out because I've noticed Aryan has been struggling with recent math assignments and has missed a few classes. I'd love to schedule a quick 10-minute chat to discuss how we can support him better.\n\nBest,\nMr. Smith`)
+      setIsPopupGenerating(false)
+    }, 2000)
+  }
 
   const [attendance, setAttendance] = useState([
     { id: 1, name: "Rohan Das", roll: "2001", status: "Present" },
@@ -55,7 +69,10 @@ export default function TeacherDashboard() {
           <h2 className="text-3xl font-bold tracking-tight text-slate-900 dark:text-slate-50">Welcome back, Mr. Smith</h2>
           <p className="text-slate-500 dark:text-slate-400 mt-1">Here is the overview for your classes today.</p>
         </div>
-        <Button className="bg-indigo-600 hover:bg-indigo-700 shadow-lg shadow-indigo-200 dark:shadow-none gap-2 px-6">
+        <Button 
+          onClick={() => setIsCopilotOpen(true)}
+          className="bg-indigo-600 hover:bg-indigo-700 shadow-lg shadow-indigo-200 dark:shadow-none gap-2 px-6"
+        >
           <Sparkles className="w-4 h-4" /> Wait, Ask AI Copilot
         </Button>
       </div>
@@ -89,6 +106,16 @@ export default function TeacherDashboard() {
           <CardContent>
             <div className="text-2xl font-bold">3</div>
             <p className="text-xs text-muted-foreground mt-1">+2 from yesterday</p>
+          </CardContent>
+        </Card>
+        <Card className="border-0 shadow-sm ring-1 ring-red-500/20 bg-red-50/50 dark:bg-red-950/20">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium text-red-700 dark:text-red-400">At-Risk Students</CardTitle>
+            <AlertTriangle className="h-4 w-4 text-red-600" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold text-red-600">8</div>
+            <p className="text-xs text-red-500 mt-1">Identified by AI Analysis</p>
           </CardContent>
         </Card>
       </div>
@@ -329,6 +356,67 @@ export default function TeacherDashboard() {
           </Card>
         </TabsContent>
       </Tabs>
+
+      {/* AI Copilot Popup */}
+      {isCopilotOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 backdrop-blur-sm p-4">
+          <div className="bg-white dark:bg-slate-950 rounded-xl shadow-lg w-full max-w-lg border border-slate-200 dark:border-slate-800 p-6 animate-in zoom-in-95 duration-200">
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center gap-2">
+                <Sparkles className="w-5 h-5 text-indigo-500" />
+                <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-100">AI Copilot</h3>
+              </div>
+              <Button variant="ghost" size="icon" onClick={() => {
+                setIsCopilotOpen(false);
+                setPopupResult(null);
+                setPopupInput("");
+              }} className="h-8 w-8 p-0 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500">
+                <X className="w-4 h-4" />
+              </Button>
+            </div>
+            <div className="space-y-4">
+              <p className="text-sm text-slate-600 dark:text-slate-400">
+                Hi Mr. Smith! I'm your AI Copilot. I can help you analyze student performance, draft emails to parents, or generate lesson plans.
+              </p>
+              
+              {!popupResult ? (
+                <>
+                  <textarea 
+                    value={popupInput}
+                    onChange={(e) => setPopupInput(e.target.value)}
+                    className="w-full rounded-md border border-slate-200 dark:border-slate-800 p-3 text-sm min-h-[100px] outline-none focus:ring-2 focus:ring-indigo-500 bg-transparent placeholder:text-slate-400 dark:text-slate-100"
+                    placeholder="e.g. Draft an email to Aryan's parents about his grades..."
+                  />
+                  <Button 
+                    disabled={isPopupGenerating || !popupInput.trim()} 
+                    onClick={handlePopupGenerate}
+                    className="w-full bg-indigo-600 hover:bg-indigo-700"
+                  >
+                    {isPopupGenerating ? (
+                      <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Thinking...</>
+                    ) : (
+                      <>Ask Copilot <Sparkles className="w-4 h-4 ml-2" /></>
+                    )}
+                  </Button>
+                </>
+              ) : (
+                <div className="mt-4 p-4 rounded-md bg-indigo-50 border border-indigo-100 dark:bg-slate-900 dark:border-indigo-900 shadow-sm animate-in fade-in">
+                  <div className="text-sm whitespace-pre-wrap text-slate-700 dark:text-slate-300">
+                    {popupResult}
+                  </div>
+                  <div className="mt-4 flex gap-2">
+                    <Button size="sm" variant="outline" onClick={() => {
+                      setPopupResult(null)
+                      setPopupInput("")
+                    }}>Ask Another Question</Button>
+                    <Button size="sm" className="bg-blue-600 hover:bg-blue-700">Copy to Clipboard</Button>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
