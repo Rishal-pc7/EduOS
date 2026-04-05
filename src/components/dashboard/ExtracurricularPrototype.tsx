@@ -9,9 +9,9 @@ import { Badge } from "@/components/ui/badge"
 
 export function ExtracurricularPrototype({ role }: { role: string }) {
   const [activities, setActivities] = useState<{id: number, name: string, scope: string, enrolled: boolean, members: number, instructor: string}[]>([
-    { id: 1, name: "Debate Society", scope: "Public Speaking & Argumentation", enrolled: false, members: 24, instructor: "Mr. Sharma" },
-    { id: 2, name: "Varsity Football", scope: "Daily afternoon training & inter-school trials.", enrolled: true, members: 45, instructor: "Coach Davis" },
-    { id: 3, name: "Robotics Club", scope: "Learn embedded systems and build competition units.", enrolled: false, members: 16, instructor: "Ms. Gupta" }
+    { id: 1, name: "Debate Society", scope: "Public Speaking & Argumentation", enrolled: false, members: 24, instructor: "Mr. Sreekumar" },
+    { id: 2, name: "Varsity Football", scope: "Daily afternoon training & inter-school trials.", enrolled: true, members: 45, instructor: "Coach Nair" },
+    { id: 3, name: "Robotics Club", scope: "Learn embedded systems and build competition units.", enrolled: false, members: 16, instructor: "Ms. Lakshmi" }
   ]);
   const [newActivityName, setNewActivityName] = useState("");
 
@@ -32,8 +32,8 @@ export function ExtracurricularPrototype({ role }: { role: string }) {
     <div className="space-y-6 animate-in fade-in duration-500 max-w-5xl mx-auto">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h2 className="text-3xl font-bold tracking-tight">Extracurricular Activities</h2>
-          <p className="text-slate-500 dark:text-slate-400 mt-1">Enroll in clubs and manage extra-curricular life.</p>
+          <h2 className="text-3xl font-bold tracking-tight">Extracurricular Assignments</h2>
+          <p className="text-slate-500 dark:text-slate-400 mt-1">Assign departments to oversee clubs and manage extra-curricular life.</p>
         </div>
       </div>
 
@@ -64,7 +64,7 @@ export function ExtracurricularPrototype({ role }: { role: string }) {
             <CardHeader className="pb-2">
               <div className="flex justify-between items-start gap-2">
                 <CardTitle className="text-lg leading-tight">{a.name}</CardTitle>
-                {a.enrolled && <Badge className="bg-green-500">Enrolled</Badge>}
+                {a.enrolled && <Badge className="bg-green-500">Assigned</Badge>}
               </div>
               <p className="text-xs font-semibold text-slate-500">Instructor: {a.instructor}</p>
             </CardHeader>
@@ -72,11 +72,11 @@ export function ExtracurricularPrototype({ role }: { role: string }) {
               {a.scope}
             </CardContent>
             <CardFooter className="pt-0 flex justify-between items-center border-t border-slate-100 dark:border-slate-800 mt-4 py-3 bg-slate-50/50 dark:bg-slate-900/20 rounded-b-lg">
-              <span className="text-xs text-slate-500 font-medium">{a.members} Participants</span>
+              <span className="text-xs text-slate-500 font-medium">Assigned to: {a.enrolled ? 'Science Dept' : 'Unassigned'}</span>
               {!a.enrolled ? (
-                <Button size="sm" onClick={() => handleEnroll(a.id)} className="shrink-0 bg-indigo-600 hover:bg-indigo-700">Enroll Me</Button>
+                <Button size="sm" onClick={() => handleEnroll(a.id)} className="shrink-0 bg-indigo-600 hover:bg-indigo-700">Assign Dept</Button>
               ) : (
-                <Button size="sm" variant="outline" className="shrink-0 text-green-600 border-green-200 bg-green-50 dark:bg-green-900/20" disabled>Registered</Button>
+                <Button size="sm" variant="outline" className="shrink-0 text-green-600 border-green-200 bg-green-50 dark:bg-green-900/20" disabled>Assigned</Button>
               )}
             </CardFooter>
           </Card>

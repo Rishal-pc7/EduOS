@@ -22,7 +22,7 @@ export default function TeacherDashboard() {
     if (!popupInput.trim()) return;
     setIsPopupGenerating(true)
     setTimeout(() => {
-      setPopupResult(`Here's a draft email to Aryan's parents:\n\nDear Mr. & Mrs. Sharma,\nI hope this email finds you well. I'm reaching out because I've noticed Aryan has been struggling with recent math assignments and has missed a few classes. I'd love to schedule a quick 10-minute chat to discuss how we can support him better.\n\nBest,\nMr. Smith`)
+      setPopupResult(`Here's a draft WhatsApp message to Aryan's parents:\n\nNamaste Mr. & Mrs. Sreekumar,\nI hope you're doing well. I noticed Aryan has missed a few classes and assignments recently. Let's schedule a quick 10-minute call to discuss how we can support him.\n\nRegards,\nMr. Krishnan`)
       setIsPopupGenerating(false)
     }, 2000)
   }
@@ -66,7 +66,7 @@ export default function TeacherDashboard() {
     <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h2 className="text-3xl font-bold tracking-tight text-slate-900 dark:text-slate-50">Welcome back, Mr. Smith</h2>
+          <h2 className="text-3xl font-bold tracking-tight text-slate-900 dark:text-slate-50">Welcome back, Mr. Krishnan</h2>
           <p className="text-slate-500 dark:text-slate-400 mt-1">Here is the overview for your classes today.</p>
         </div>
         <Button 
@@ -119,6 +119,19 @@ export default function TeacherDashboard() {
           </CardContent>
         </Card>
       </div>
+
+      <Card className="border-0 shadow-sm bg-slate-50 dark:bg-slate-900 mb-6">
+        <CardHeader className="pb-2">
+          <CardTitle className="text-base">Timetable Constraints</CardTitle>
+          <CardDescription>Input your preferred hours or leave requests for the upcoming auto-schedule run.</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="flex gap-2">
+            <input type="text" placeholder="e.g. Need Monday afternoons free" className="flex h-10 w-full rounded-md border border-slate-200 bg-white px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-indigo-500 dark:border-slate-800 dark:bg-slate-950" />
+            <Button className="bg-indigo-600 hover:bg-indigo-700 whitespace-nowrap text-white">Submit to Admin</Button>
+          </div>
+        </CardContent>
+      </Card>
 
       <Tabs defaultValue="attendance" className="w-full">
         <TabsList className="mb-4 text-xs sm:text-sm">
@@ -328,7 +341,7 @@ export default function TeacherDashboard() {
                   </div>
                   <div className="mt-3 flex justify-end">
                     <Button variant="outline" size="sm" className="text-indigo-600 hover:text-indigo-700">
-                      Take Action <ChevronRight className="w-4 h-4 ml-1" />
+                      Request Parent Meeting (WhatsApp) <ChevronRight className="w-4 h-4 ml-1" />
                     </Button>
                   </div>
                 </div>
@@ -376,7 +389,7 @@ export default function TeacherDashboard() {
             </div>
             <div className="space-y-4">
               <p className="text-sm text-slate-600 dark:text-slate-400">
-                Hi Mr. Smith! I'm your AI Copilot. I can help you analyze student performance, draft emails to parents, or generate lesson plans.
+                Hi Mr. Krishnan! I'm your AI Copilot. I can help you analyze student performance, create WhatsApp updates to parents, or generate lesson plans.
               </p>
               
               {!popupResult ? (
@@ -385,7 +398,7 @@ export default function TeacherDashboard() {
                     value={popupInput}
                     onChange={(e) => setPopupInput(e.target.value)}
                     className="w-full rounded-md border border-slate-200 dark:border-slate-800 p-3 text-sm min-h-[100px] outline-none focus:ring-2 focus:ring-indigo-500 bg-transparent placeholder:text-slate-400 dark:text-slate-100"
-                    placeholder="e.g. Draft an email to Aryan's parents about his grades..."
+                    placeholder="e.g. Draft a WhatsApp update to Aryan's parents..."
                   />
                   <Button 
                     disabled={isPopupGenerating || !popupInput.trim()} 

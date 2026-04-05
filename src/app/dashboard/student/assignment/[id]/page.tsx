@@ -44,7 +44,7 @@ export default function AssignmentPage() {
             <Badge variant="outline" className="text-orange-600 border-orange-200 bg-orange-50 dark:border-orange-900/50 dark:bg-orange-900/20">Due Tomorrow</Badge>
           </div>
           <h2 className="text-3xl font-bold tracking-tight text-slate-900 dark:text-slate-50">Algebra Fundamentals</h2>
-          <p className="text-slate-500 dark:text-slate-400 mt-1">Assigned by Mr. Sharma • 40 Total Marks</p>
+          <p className="text-slate-500 dark:text-slate-400 mt-1">Assigned by Mr. Sreekumar • 40 Total Marks</p>
         </div>
         <div className="flex items-center gap-2 bg-slate-100 dark:bg-slate-800 px-4 py-2 rounded-lg font-medium text-slate-700 dark:text-slate-300">
           <Clock className="w-4 h-4 text-slate-500" /> Time Remaining: 14h 22m

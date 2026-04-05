@@ -7,6 +7,8 @@ import { Badge } from "@/components/ui/badge"
 
 import { StudentsHub } from "@/components/dashboard/StudentsHub"
 import { ExtracurricularPrototype } from "@/components/dashboard/ExtracurricularPrototype"
+import { AdmissionsPanel } from "@/components/dashboard/AdmissionsPanel"
+import { TeacherAllocationPanel } from "@/components/dashboard/TeacherAllocationPanel"
 
 function AcademicsHubPrototype({ role }: { role: string }) {
   if (role === 'student') {
@@ -20,10 +22,10 @@ function AcademicsHubPrototype({ role }: { role: string }) {
         </div>
         <div className="grid gap-6 md:grid-cols-2">
           {[
-            { sub: "Mathematics", teacher: "Mr. Sharma", code: "MAT-901", progress: 85, mats: 24, icon: "➗", color: "text-blue-600 bg-blue-100" },
-            { sub: "Physics", teacher: "Ms. Gupta", code: "PHY-902", progress: 60, mats: 16, icon: "⚡", color: "text-orange-600 bg-orange-100" },
-            { sub: "Computer Science", teacher: "Mr. Davis", code: "CS-903", progress: 40, mats: 12, icon: "💻", color: "text-emerald-600 bg-emerald-100" },
-            { sub: "English Literature", teacher: "Mrs. Smith", code: "ENG-904", progress: 90, mats: 31, icon: "📚", color: "text-indigo-600 bg-indigo-100" }
+            { sub: "Mathematics", teacher: "Mr. Sreekumar", code: "MAT-901", progress: 85, mats: 24, icon: "➗", color: "text-blue-600 bg-blue-100" },
+            { sub: "Physics", teacher: "Ms. Lakshmi", code: "PHY-902", progress: 60, mats: 16, icon: "⚡", color: "text-orange-600 bg-orange-100" },
+            { sub: "Computer Science", teacher: "Mr. Varghese", code: "CS-903", progress: 40, mats: 12, icon: "💻", color: "text-emerald-600 bg-emerald-100" },
+            { sub: "English Literature", teacher: "Ms. Nair", code: "ENG-904", progress: 90, mats: 31, icon: "📚", color: "text-indigo-600 bg-indigo-100" }
           ].map((c, i) => (
             <Card key={i} className="border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-md transition-shadow cursor-pointer group">
               <CardHeader className="pb-3 border-b border-slate-100 dark:border-slate-800">
@@ -255,9 +257,13 @@ export default async function DynamicTabPage({ params }: { params: Promise<{ rol
       {tabId === 'transport' && <BusTrackingPrototype />}
       {tabId === 'announcements' && <AnnouncementsPrototype />}
       {tabId === 'extracurricular' && <ExtracurricularPrototype role={resolvedParams.role} />}
+
+      {/* Admin-specific panels */}
+      {tabId === 'admissions' && <AdmissionsPanel />}
+      {tabId === 'teachers' && <TeacherAllocationPanel />}
       
       {/* Fallback for unknown tabs */}
-      {['students', 'academics', 'settings', 'transport', 'announcements', 'extracurricular'].indexOf(tabId) === -1 && (
+      {['students', 'academics', 'settings', 'transport', 'announcements', 'extracurricular', 'admissions', 'teachers'].indexOf(tabId) === -1 && (
         <div className="flex flex-col items-center justify-center py-20 text-slate-400">
           <BookOpen className="w-12 h-12 mb-4 opacity-50" />
           <p>Module configuration not found.</p>

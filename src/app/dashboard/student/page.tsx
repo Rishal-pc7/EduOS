@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import Link from "next/link"
-import { BookOpen, Target, Check, Calendar, MessageCircle, Bot, Utensils, Send, Clock, User, Award, Activity, PlayCircle } from "lucide-react"
+import { BookOpen, Target, Check, Calendar, MessageCircle, Bot, Utensils, Send, Clock, User, Award, Activity, PlayCircle, Wallet } from "lucide-react"
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
@@ -11,9 +11,10 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 
 export default function StudentDashboard() {
+  const [viewingAs, setViewingAs] = useState<"Parent" | "Student">("Student");
   const [tasks, setTasks] = useState([
-    { id: 1, subject: "Mathematics", topic: "Algebra Fundamentals", due: "Tomorrow", teacher: "Mr. Sharma", status: "pending" },
-    { id: 2, subject: "Physics", topic: "Lab Report 2", due: "In 2 days", teacher: "Ms. Gupta", status: "pending" },
+    { id: 1, subject: "Mathematics", topic: "Algebra Fundamentals", due: "Tomorrow", teacher: "Mr. Sreekumar", status: "pending" },
+    { id: 2, subject: "Physics", topic: "Lab Report 2", due: "In 2 days", teacher: "Ms. Lakshmi", status: "pending" },
   ]);
 
   const [canteenNeeded, setCanteenNeeded] = useState(true);
@@ -52,7 +53,43 @@ export default function StudentDashboard() {
           <h2 className="text-3xl font-bold tracking-tight text-slate-900 dark:text-slate-50">Welcome back, Rohan</h2>
           <p className="text-slate-500 dark:text-slate-400 mt-1">Here is your daily school performance and agenda.</p>
         </div>
+        <div className="flex items-center gap-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-1 rounded-lg">
+          <Button 
+            variant={viewingAs === "Parent" ? "default" : "ghost"} 
+            size="sm" 
+            onClick={() => setViewingAs("Parent")}
+            className={viewingAs === "Parent" ? "bg-indigo-600 text-white" : ""}
+          >
+            Viewing as: Parent
+          </Button>
+          <Button 
+            variant={viewingAs === "Student" ? "default" : "ghost"} 
+            size="sm" 
+            onClick={() => setViewingAs("Student")}
+            className={viewingAs === "Student" ? "bg-indigo-600 text-white" : ""}
+          >
+            Viewing as: Student
+          </Button>
+        </div>
       </div>
+
+      {viewingAs === "Parent" && (
+        <Card className="border-emerald-200 bg-emerald-50 dark:border-emerald-900/50 dark:bg-emerald-900/10 shadow-sm animate-in fade-in zoom-in-95">
+          <CardContent className="p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div className="flex items-center gap-3">
+              <div className="p-2 bg-emerald-100 dark:bg-emerald-800/50 rounded-full">
+                <Wallet className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
+              </div>
+              <div>
+                <p className="font-semibold text-emerald-900 dark:text-emerald-100">Pending Fees: ₹12500</p>
+              </div>
+            </div>
+            <Button className="bg-emerald-600 hover:bg-emerald-700 text-white shadow-sm shrink-0">
+              Pay via UPI / GPay
+            </Button>
+          </CardContent>
+        </Card>
+      )}
 
       {/* Top Metrics: Performance, Attendance, Canteen */}
       <div className="grid gap-4 md:grid-cols-3">
@@ -159,8 +196,8 @@ export default function StudentDashboard() {
             <CardContent>
               <div className="space-y-3">
                 {[
-                  { name: "Mr. Sharma", sub: "Mathematics", available: true },
-                  { name: "Ms. Gupta", sub: "Physics", available: false }
+                  { name: "Mr. Sreekumar", sub: "Mathematics", available: true },
+                  { name: "Ms. Lakshmi", sub: "Physics", available: false }
                 ].map((t, i) => (
                   <div key={i} className="flex items-center justify-between p-3 border border-slate-100 dark:border-slate-800 rounded-lg">
                     <div className="flex items-center gap-3">
